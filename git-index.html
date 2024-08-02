@@ -111,5 +111,48 @@
         </div>
       </div>
     </div>
+
+    <script>
+      let searchInput = document.querySelector("#search-input").value;
+      document.getElementById("submit").addEventListener("click", search);
+
+      function search(e) {
+        e.preventDefault();
+        let search = document.getElementById("search-input").value;
+        document.getElementById("header").innerHTML = search;
+      }
+
+      document.getElementById("date").innerHTML = Date();
+
+      function showComments(response) {
+        console.log(response);
+      }
+
+      let apiEmail = "https://jsonplaceholder.typicode.com/comments/1";
+      axios.get(apiEmail).then(displayEmail);
+      const form = document.querySelector("form");
+      const input = document.querySelector("input");
+      const tempDisplay = document.querySelector("#temperature");
+
+      form.addEventListener("submit", (event) => {
+        event.preventDefault();
+
+        const apiKey = "7eot7c9e36304bbfae357f4a433400e3";
+        const cityName = input.value.trim();
+
+        fetch(
+          `https://api.shecodes.io/weather/v1/current?query=${city}&key=${apiKey}&units=metric`
+        )
+          .then((response) => response.json())
+          .then((data) => {
+            const temperature = data.main.temp;
+            tempDisplay.textContent = `The temperature in ${cityName} is ${temperature}°C`;
+          })
+          .catch((error) => {
+            console.error(error);
+            tempDisplay.textContent = `Couldn't retrieve temperature for ${cityName}. Please try again later.`;
+          });
+      });
+    </script>
   </body>
 </html>
